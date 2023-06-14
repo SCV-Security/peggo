@@ -137,7 +137,7 @@ func (s *peggyBroadcastClient) UpdatePeggyOrchestratorAddresses(
 		Orchestrator: orchestratorAddr.String(),
 	}
 
-	res, err := s.broadcastClient.SyncBroadcastMsg(msg)
+	res, err := s.broadcastClient.AsyncBroadcastMsg(msg)
 	fmt.Println("Response of set eth address", "res", res)
 	if err != nil {
 		metrics.ReportFuncError(s.svcTags)
@@ -268,7 +268,7 @@ func (s *peggyBroadcastClient) sendOldDepositClaims(
 		Data:           "",
 	}
 
-	if txResponse, err := s.broadcastClient.SyncBroadcastMsg(msg); err != nil {
+	if txResponse, err := s.broadcastClient.AsyncBroadcastMsg(msg); err != nil {
 		metrics.ReportFuncError(s.svcTags)
 		log.WithError(err).Errorln("broadcasting MsgDepositClaim failed")
 		return err
@@ -314,7 +314,7 @@ func (s *peggyBroadcastClient) sendDepositClaims(
 		Data:           deposit.Data,
 	}
 
-	if txResponse, err := s.broadcastClient.SyncBroadcastMsg(msg); err != nil {
+	if txResponse, err := s.broadcastClient.AsyncBroadcastMsg(msg); err != nil {
 		metrics.ReportFuncError(s.svcTags)
 		log.WithError(err).Errorln("broadcasting MsgDepositClaim failed")
 		return err
@@ -352,7 +352,7 @@ func (s *peggyBroadcastClient) sendWithdrawClaims(
 		Orchestrator:  s.AccFromAddress().String(),
 	}
 
-	if txResponse, err := s.broadcastClient.SyncBroadcastMsg(msg); err != nil {
+	if txResponse, err := s.broadcastClient.AsyncBroadcastMsg(msg); err != nil {
 		metrics.ReportFuncError(s.svcTags)
 		log.WithError(err).Errorln("broadcasting MsgWithdrawClaim failed")
 		return err
@@ -401,7 +401,7 @@ func (s *peggyBroadcastClient) sendValsetUpdateClaims(
 		Orchestrator: s.AccFromAddress().String(),
 	}
 
-	if txResponse, err := s.broadcastClient.SyncBroadcastMsg(msg); err != nil {
+	if txResponse, err := s.broadcastClient.AsyncBroadcastMsg(msg); err != nil {
 		metrics.ReportFuncError(s.svcTags)
 		log.WithError(err).Errorln("broadcasting MsgValsetUpdatedClaim failed")
 		return err
@@ -443,7 +443,7 @@ func (s *peggyBroadcastClient) sendErc20DeployedClaims(
 		Orchestrator:  s.AccFromAddress().String(),
 	}
 
-	if txResponse, err := s.broadcastClient.SyncBroadcastMsg(msg); err != nil {
+	if txResponse, err := s.broadcastClient.AsyncBroadcastMsg(msg); err != nil {
 		metrics.ReportFuncError(s.svcTags)
 		log.WithError(err).Errorln("broadcasting MsgERC20DeployedClaim failed")
 		return err
